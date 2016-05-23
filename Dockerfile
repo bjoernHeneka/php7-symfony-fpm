@@ -22,6 +22,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -fr /var/lib/apt/lists/*
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 ADD symfony.ini /etc/php/7.0/fpm/conf.d/
 ADD symfony.ini /etc/php/7.0/cli/conf.d/
 
