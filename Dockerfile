@@ -9,20 +9,29 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y \
-    php-mcrypt \
-    php7.0-mysql \
-    php7.0-apcu \
-    php7.0-gd \
-    php7.0-imagick \
-    php7.0-curl \
-    php7.0-intl \
-    php7.0-ldap \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng12-dev \
+    libcurl4-gnutls-dev \
+    zlib1g-dev \
+    libicu-dev \
+    libmcrypt-dev \
+    g++ \
+    libxml2-dev \
+    libpq-dev \
     vim \
     cron && \
     apt-get clean && \
     rm -fr /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) pdo \
+    && docker-php-ext-install -j$(nproc) pdo_mysql \
+    && docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-install -j$(nproc) curl \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install -j$(nproc) mcrypt \
+    && docker-php-ext-install -j$(nproc) exif
 
 ADD symfony.ini /etc/php/7.0/fpm/conf.d/
 ADD symfony.ini /etc/php/7.0/cli/conf.d/
