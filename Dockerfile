@@ -18,7 +18,9 @@ RUN apt-get update && \
     libmcrypt-dev \
     g++ \
     libxml2-dev \
+    libldb-dev \
     libpq-dev \
+    libldap2-dev \
     vim \
     cron && \
     apt-get clean && \
@@ -31,8 +33,13 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && docker-php-ext-install -j$(nproc) curl \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install -j$(nproc) mcrypt \
-    && docker-php-ext-install -j$(nproc) exif
-    && docker-php-ext-install -j$(nproc) opcache
+    && docker-php-ext-install -j$(nproc) exif \
+    && docker-php-ext-install -j$(nproc) opcache \
+    && docker-php-ext-install -j$(nproc) zip \
+    && docker-php-ext-install -j$(nproc) ldap
+
+RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
+    && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
 
 ADD symfony.ini /etc/php/7.0/fpm/conf.d/
 ADD symfony.ini /etc/php/7.0/cli/conf.d/
