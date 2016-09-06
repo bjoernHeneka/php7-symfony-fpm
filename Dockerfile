@@ -46,6 +46,13 @@ ADD symfony.ini /etc/php/7.0/cli/conf.d/
 
 ADD symfony.pool.conf /etc/php/7.0/fpm//pool.d/
 
+## ADD nodejs and less for development container
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - &&
+    apt-get install -y nodejs &&
+    apt-get clean && \
+    rm -fr /var/lib/apt/lists/* &&
+    npm install -g less
+
 RUN usermod -u 1000 www-data
 
 ADD start.sh /start.sh
