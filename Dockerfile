@@ -32,6 +32,7 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
 RUN docker-php-ext-install -j$(nproc) pdo \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     && docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-ext-install -j$(nproc) curl \
     && docker-php-ext-install -j$(nproc) mcrypt \
     && docker-php-ext-install -j$(nproc) exif \
