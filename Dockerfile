@@ -49,9 +49,9 @@ ADD symfony.pool.conf /etc/php/7.0/fpm//pool.d/
 
 RUN usermod -u 1000 www-data
 
-ADD start.sh /start.sh
-RUN chmod +x /start.sh
+ADD start.sh /root/start.sh
+RUN chmod +x /root/start.sh
 
 WORKDIR /var/www/symfony
 
-CMD ["/bin/bash", "/start.sh"]
+CMD ["/bin/bash", "/root/start.sh"]
