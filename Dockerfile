@@ -47,6 +47,7 @@ ADD symfony.ini /etc/php/7.0/fpm/conf.d/
 ADD symfony.ini /etc/php/7.0/cli/conf.d/
 
 ADD symfony.pool.conf /etc/php/7.0/fpm//pool.d/
+COPY config/php.ini /usr/local/etc/php/
 
 RUN usermod -u 1000 www-data
 
