@@ -22,6 +22,12 @@ RUN apt-get update && \
     libpq-dev \
     libldap2-dev \
     vim \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libpng12-dev \
+    ghostscript \
+    libmagickwand-dev --no-install-recommends \
     cron && \
     apt-get clean && \
     rm -fr /var/lib/apt/lists/*
@@ -41,12 +47,15 @@ RUN docker-php-ext-install -j$(nproc) pdo \
     && docker-php-ext-install -j$(nproc) ldap \
     && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) gd \
+    && pecl install imagick  \
+    && docker-php-ext-enable imagick
 
 ADD symfony.ini /etc/php/7.0/fpm/conf.d/
 ADD symfony.ini /etc/php/7.0/cli/conf.d/
 
 ADD symfony.pool.conf /etc/php/7.0/fpm//pool.d/
+COPY config/php.ini /usr/local/etc/php/
 
 ## ADD nodejs and less for development container
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
