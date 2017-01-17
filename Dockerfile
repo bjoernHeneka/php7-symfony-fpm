@@ -60,6 +60,8 @@ RUN usermod -u 1000 www-data
 ADD start.sh /root/start.sh
 RUN chmod +x /root/start.sh
 
+COPY config/php.ini /usr/local/etc/php/
+
 WORKDIR /var/www/symfony
 
 CMD ["/bin/bash", "/root/start.sh"]
