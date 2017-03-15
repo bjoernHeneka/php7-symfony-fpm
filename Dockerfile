@@ -1,4 +1,4 @@
-FROM php:7.1fpm
+FROM php:7.1-fpm
 
 MAINTAINER Björn Heneka <bheneka@codebee.de>
 
